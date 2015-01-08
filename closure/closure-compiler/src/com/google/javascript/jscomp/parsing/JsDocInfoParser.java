@@ -160,6 +160,7 @@ public final class JsDocInfoParser {
         Sets.<String>newHashSet(),
         false,
         LanguageMode.ECMASCRIPT3,
+        false,
         false);
     JsDocInfoParser parser = new JsDocInfoParser(
         new JsDocTokenStream(typeString),

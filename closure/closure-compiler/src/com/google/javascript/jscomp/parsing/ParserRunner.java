@@ -54,13 +54,14 @@ public class ParserRunner {
   public static Config createConfig(boolean isIdeMode,
                                     LanguageMode languageMode,
                                     boolean acceptConstKeyword) {
-    return createConfig(isIdeMode, languageMode, acceptConstKeyword, null);
+    return createConfig(isIdeMode, languageMode, acceptConstKeyword, null, false);
   }
 
   public static Config createConfig(boolean isIdeMode,
                                     LanguageMode languageMode,
                                     boolean acceptConstKeyword,
-                                    Set<String> extraAnnotationNames) {
+                                    Set<String> extraAnnotationNames,
+                                    boolean isIgnoreSourcePositions) {
     initResourceConfig();
     Set<String> effectiveAnnotationNames;
     if (extraAnnotationNames == null) {
@@ -70,7 +71,7 @@ public class ParserRunner {
       effectiveAnnotationNames.addAll(extraAnnotationNames);
     }
     return new Config(effectiveAnnotationNames, suppressionNames,
-        isIdeMode, languageMode, acceptConstKeyword);
+        isIdeMode, languageMode, acceptConstKeyword, isIgnoreSourcePositions);
   }
 
   private static synchronized void initResourceConfig() {

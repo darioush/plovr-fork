@@ -15,8 +15,23 @@ public class PlovrClosureCompiler extends Compiler {
 
   private PlovrDiagnosticGroups diagnosticGroups = new PlovrDiagnosticGroups();
 
-  @Override
+  final boolean isIgnoreSourcePositions;
+
+  public PlovrClosureCompiler() {
+	if (null != System.getenv("PLOVR_IGNORE_SOURCE_POSITIONS")) {
+		this.isIgnoreSourcePositions = true;
+	} else {
+		this.isIgnoreSourcePositions = false;
+	}
+  }
+
+@Override
   protected PlovrDiagnosticGroups getDiagnosticGroups() {
     return diagnosticGroups;
   }
+
+@Override
+	public boolean isIgnoreSourcePositions() {
+		return this.isIgnoreSourcePositions;
+	}
 }

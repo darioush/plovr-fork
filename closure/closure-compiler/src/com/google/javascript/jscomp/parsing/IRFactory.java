@@ -374,6 +374,9 @@ class IRFactory {
   }
 
   private int position2charno(int position) {
+	if (config.isIgnoreSourcePositions) {
+		return 0;
+	}
     int lineIndex = sourceString.lastIndexOf('\n', position);
     if (lineIndex == -1) {
       return position;

@@ -2039,12 +2039,17 @@ public class Compiler extends AbstractCompiler {
         isIdeMode(),
         mode,
         acceptConstKeyword(),
-        options.extraAnnotationNames);
+        options.extraAnnotationNames,
+        isIgnoreSourcePositions());
     }
     return parserConfig;
   }
 
-  @Override
+  public boolean isIgnoreSourcePositions() {
+	return false;
+}
+
+@Override
   public boolean isTypeCheckingEnabled() {
     return options.checkTypes;
   }

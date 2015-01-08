@@ -67,18 +67,25 @@ public class Config {
   final boolean acceptConstKeyword;
 
   /**
+   * Whether we are ignoring source position calculations
+   */
+  final boolean isIgnoreSourcePositions;
+
+  /**
    * Annotation names.
    */
 
   Config(Set<String> annotationWhitelist, Set<String> suppressionNames,
       boolean isIdeMode, LanguageMode languageMode,
-      boolean acceptConstKeyword) {
+      boolean acceptConstKeyword,
+      boolean isIgnoreSourcePositions) {
     this.annotationNames = buildAnnotationNames(annotationWhitelist);
     this.parseJsDocDocumentation = isIdeMode;
     this.suppressionNames = suppressionNames;
     this.isIdeMode = isIdeMode;
     this.languageMode = languageMode;
     this.acceptConstKeyword = acceptConstKeyword;
+    this.isIgnoreSourcePositions = isIgnoreSourcePositions;
   }
 
   /**

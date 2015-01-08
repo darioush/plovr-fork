@@ -79,7 +79,7 @@ final class NameAnalyzer implements CompilerPass {
   private final AbstractCompiler compiler;
 
   /** Map of all JS names found */
-  private final Map<String, JsName> allNames = Maps.newTreeMap();
+  private final Map<String, JsName> allNames = Maps.newHashMap();
 
   /** Reference dependency graph */
   private DiGraph<JsName, RefType> referenceGraph =

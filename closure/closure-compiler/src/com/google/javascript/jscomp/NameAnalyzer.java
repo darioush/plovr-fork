@@ -38,6 +38,7 @@ import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -1100,9 +1101,51 @@ final class NameAnalyzer implements CompilerPass {
     JsName to = getName(toName, true);
     referenceGraph.createNode(from);
     referenceGraph.createNode(to);
-    if (!referenceGraph.isConnectedInDirection(from, depType, to)) {
+    if (!isReferenceGraphConnectedInDirection(fromName, depType, toName)) {
       referenceGraph.connect(from, depType, to);
     }
+  }
+
+  private static final class RefEdge {
+     private final String fromName, toName;
+     private final RefType refType;
+
+     RefEdge(String fromName, RefType refType, String toName) {
+       this.fromName = fromName;
+       this.refType = refType;
+       this.toName = toName;
+     }
+
+   @Override
+   public boolean equals(Object obj) {
+     if (obj == null) {
+       return false;
+     }
+     if ((obj instanceof RefEdge)) {
+       RefEdge other = (RefEdge) obj;
+       return this.refType == other.refType &&
+           this.fromName.equals(other.refType) &&
+           this.toName.equals(other.toName);
+     } else{
+       return false;
+     }
+   }
+
+   @Override
+   public int hashCode() {
+     int result = 17;
+     result = this.refType == RefType.INHERITANCE ? 1 : 0;
+     result = 31 * result + this.fromName.hashCode();
+     result = 31 * result + this.toName.hashCode();
+     return result;
+   }
+  }
+
+    private HashSet<RefEdge> _referenceGraph = Sets.newHashSet();
+
+  private boolean isReferenceGraphConnectedInDirection (String fromName, RefType depType,
+       String toName) {
+     return ! _referenceGraph.add(new RefEdge(fromName, depType, toName));
   }
 
   /**
